@@ -13,19 +13,19 @@ export class App extends React.Component {
           name: "Blue",
           artist: "Tentaro",
           album: "Green",
-          id: 1
+          id: 3
         },
         {
           name: "Red",
           artist: "Tentaro",
           album: "Green",
-          id: 2
+          id: 6
         },
         {
           name: "White",
           artist: "Alex",
           album: "Peach",
-          id: 3
+          id: 7
         }
       ],
       playlistName: "My Playlist",
@@ -50,6 +50,16 @@ export class App extends React.Component {
         }
       ]
     };
+    this.addTrack = this.addTrack.bind(this);
+  }
+
+  addTrack(track) {
+    if (this.state.playlistTracks.find(savedTrack => savedTrack.id === track.id)) {
+      return;
+    }
+    this.setState({
+      playlistTracks: this.state.playlistTracks.concat([track])
+    })
   }
 
   render() {
@@ -59,7 +69,7 @@ export class App extends React.Component {
         <div class="App">
           <SearchBar />
           <div class="App-playlist">
-            <SearchResults searchResults={this.state.sarchResults} />
+            <SearchResults searchResults={this.state.sarchResults} onAdd={this.addTrack} />
             <Playlist playlistName={this.state.playlistName} playlistTracks={this.state.playlistTracks} />
           </div>
         </div>
