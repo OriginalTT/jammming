@@ -13,6 +13,8 @@ export class TrackList extends React.Component {
                         key={track.id}
                         onAdd={this.props.onAdd}
                         onRemove={this.props.onRemove}
+                        onGetArtist={this.props.onGetArtist}
+                        onGetAlbum={this.props.onGetAlbum}
                         isRemoval={this.props.isRemoval} />)
                 })}
             </div>

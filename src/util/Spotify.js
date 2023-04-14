@@ -1,5 +1,5 @@
-const clientID = "ENTER CLIENT ID";
-const redirectUri = 'ENTER REDIRECT URI';
+const clientID = "ENTER YOUR ID";
+const redirectUri = 'ENTER YOUR REDIRECT URI';
 let accessToken;
 
 const Spotify = {
@@ -39,8 +39,59 @@ const Spotify = {
                 id: track.id,
                 name: track.name,
                 artist: track.artists[0].name,
+                artistID: track.artists[0].id,
                 album: track.album.name,
-                uri: track.uri
+                albumID: track.album.id,
+                uri: track.uri,
+                cover: track.album.images[0].url
+            }));
+        });
+    },
+
+    getArtist(id) {
+        const accessToken = Spotify.getAccessToken();
+        const headers = { Authorization: `Bearer ${accessToken}` };
+
+        return fetch(`https://api.spotify.com/v1/artists/${id}/top-tracks?market=JP`, { headers: headers }
+        ).then(response => {
+            return response.json();
+        }).then(jsonResponse => {
+            if (!jsonResponse.tracks) {
+                return [];
+            }
+            return jsonResponse.tracks.map(track => ({
+                id: track.id,
+                name: track.name,
+                artist: track.artists[0].name,
+                artistID: track.artists[0].id,
+                album: track.album.name,
+                albumID: track.album.id,
+                uri: track.uri,
+                cover: track.album.images[0].url
+            }));
+        });
+    },
+
+    getAlbum(id, name, imgSource) {
+        const accessToken = Spotify.getAccessToken();
+        const headers = { Authorization: `Bearer ${accessToken}` };
+        
+        return fetch(`https://api.spotify.com/v1/albums/${id}/tracks?market=JP`, {headers: headers}
+        ).then(response => {
+            return response.json();
+        }).then(jsonResponse => {
+            if (!jsonResponse.items) {
+                return [];
+            }
+            return jsonResponse.items.map(track => ({
+                id: track.id,
+                name: track.name,
+                artist: track.artists[0].name,
+                artistID: track.artists[0].id,
+                album: name,
+                albumID: id,
+                uri: track.uri,
+                cover: imgSource              
             }));
         });
     },

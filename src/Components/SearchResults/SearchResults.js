@@ -10,6 +10,8 @@ export class SearchResults extends React.Component {
                 <TrackList
                     tracks={this.props.searchResults}
                     onAdd={this.props.onAdd}
+                    onGetArtist={this.props.onGetArtist}
+                    onGetAlbum={this.props.onGetAlbum}
                     isRemoval={false} />
             </div>
         )
